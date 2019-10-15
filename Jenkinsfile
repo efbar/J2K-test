@@ -2,6 +2,19 @@ pipeline {
     agent any
 
     stages {
+
+        stage("Branch checkout") {
+            steps {
+                script {
+                    sh "git checkout ${BRANCH_NAME}"
+                    committerEmail = sh(
+                            script: "git --no-pager show -s --format=\'%ae\'",
+                            returnStdout: true
+                    ).trim()
+                }
+            }
+        }
+
         stage("Deploy"){
             steps {
                 echo "Going to deploy"
