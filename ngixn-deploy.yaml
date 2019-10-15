@@ -1,0 +1,46 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: nginx-deployment-00-rook
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx-00-rook
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-00-rook
+    spec: 
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "100Mi"
+          limits:
+            memory: "512Mi"
+            cpu: "2000m"
+        volumeMounts:
+          - name: data-storage
+            mountPath: /mnt
+          - name: nginx-conf
+            mountPath: /etc/nginx/nginx.conf # mount nginx-conf volume to /etc/nginx
+            subPath: nginx.conf
+          - mountPath: /var/log/nginx
+            name: log
+      volumes:
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: rook-ceph-claim
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      - name: log
+        emptyDir: {}
