@@ -7,8 +7,8 @@ pipeline {
                 echo "Going to deploy"
         
                 sh """
-                wget https://storage.googleapis.com/kubernetes-release/release/\$(wget https://storage.googleapis.com/kubernetes-release/release/stable.txt -O-)/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl
-                chmod +x /usr/local/bin/kubectl
+                wget https://storage.googleapis.com/kubernetes-release/release/\$(wget https://storage.googleapis.com/kubernetes-release/release/stable.txt -O-)/bin/linux/amd64/kubectl -O ./kubectl
+                chmod +x ./kubectl
                 """
                 withKubeConfig([
                     credentialsId: 'JENKINS_K8S_TOKEN', 
