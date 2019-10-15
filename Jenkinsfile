@@ -15,7 +15,7 @@ pipeline {
                     serverUrl: 'https://147.75.100.131:6443', 
                     namespace: "dev"]) {
                         sh """
-                        kubectl apply -f nginx-deploy.yaml
+                        ./kubectl apply -f nginx-deploy.yaml
                         """
                     }
                 }
