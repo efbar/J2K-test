@@ -18,7 +18,9 @@ pipeline {
         stage("Deploy"){
             steps {
                 echo "Going to deploy"
-        
+                sh """
+                ls -las .
+                """
                 // sh """
                 // wget https://storage.googleapis.com/kubernetes-release/release/\$(wget https://storage.googleapis.com/kubernetes-release/release/stable.txt -O-)/bin/linux/amd64/kubectl -O kubectl
                 // chmod +x ./kubectl
