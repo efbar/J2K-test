@@ -9,6 +9,7 @@ pipeline {
                 sh """
                 wget https://storage.googleapis.com/kubernetes-release/release/\$(wget https://storage.googleapis.com/kubernetes-release/release/stable.txt -O-)/bin/linux/amd64/kubectl -O ./kubectl
                 chmod +x ./kubectl
+                export PATH=\$PATH:\$(pwd)
                 """
                 withKubeConfig([
                     credentialsId: 'JENKINS_K8S_TOKEN', 
